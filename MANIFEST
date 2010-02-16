@@ -1,0 +1,9 @@
+Changes
+Makefile.PL
+MANIFEST
+META.yml			# Will be created by "make dist"
+README
+ShowStartStop.pm
+t/00-load.t
+t/eval.t
+t/pod.t
