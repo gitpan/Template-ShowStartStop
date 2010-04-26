@@ -1,13 +1,19 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Template-Timer
-version:      0.04
-version_from: Timer.pm
-installdirs:  site
+---
+abstract: "Display where template's start and stop"
+author:
+  - 'Caleb Cushing <xenoterracide@gmail.com>'
+build_requires:
+  Test::More: 0
+configure_requires:
+  ExtUtils::MakeMaker: 6.31
+generated_by: 'Dist::Zilla version 2.101040'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Template-ShowStartStop
+recommends: {}
 requires:
-    Template:                      0
-    Test::More:                    0
-    Time::HiRes:                   0
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30
+  Template::Context: 0
+  parent: 0
+version: 0.05

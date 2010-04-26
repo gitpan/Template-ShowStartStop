@@ -1,9 +1,10 @@
 Changes
-Makefile.PL
+LICENSE
 MANIFEST
-META.yml			# Will be created by "make dist"
+META.yml
+Makefile.PL
 README
-ShowStartStop.pm
+dist.ini
+lib/Template/ShowStartStop.pm
 t/00-load.t
 t/eval.t
-t/pod.t

@@ -1,48 +1,44 @@
+
 use strict;
 use warnings;
-use ExtUtils::MakeMaker;
-
-my %parms = (
-    NAME                => 'Template::ShowStartStop',
-    AUTHOR              => 'Caleb Cushing <xenoterracide@gmail.com>',
-    VERSION_FROM        => 'ShowStartStop.pm',
-    ABSTRACT_FROM       => 'ShowStartStop.pm',
-    PL_FILES            => {},
-    PREREQ_PM => {
-        'Template'      => 0,
-        'Test::More'    => 0,
-        'Time::HiRes'   => 0,
-    },
-    dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean               => { FILES => 'Template-ShowStartStop-*' },
-);
-
-if ( $ExtUtils::MakeMaker::VERSION ge '6.36' ) {
-    $parms{EXTRA_META} = <<EOF;
-resources:
-    license: http://dev.perl.org/licenses/
-    Repository: http://github.com/xenoterracide/template-showstartstop/
-EOF
-}
 
 
-WriteMakefile( %parms );
 
-sub MY::postamble {
-    my $postamble = <<'MAKE_FRAG';
-.PHONY: tags critic
+use ExtUtils::MakeMaker 6.31;
 
-tags:
-	ctags -f tags --recurse --totals \
-		--exclude=blib \
-		--exclude=.svn \
-		--exclude='*~' \
-		--languages=Perl --langmap=Perl:+.t \
 
-critic:
-	perlcritic -1 -q -profile perlcriticrc ShowStartStop.pm t/*.t
 
-MAKE_FRAG
+my %WriteMakefileArgs = (
+                       'test' => {
+                                   'TESTS' => 't/*.t'
+                                 },
+                       'NAME' => 'Template::ShowStartStop',
+                       'DISTNAME' => 'Template-ShowStartStop',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.31'
+                                               },
+                       'AUTHOR' => 'Caleb Cushing <xenoterracide@gmail.com>',
+                       'BUILD_REQUIRES' => {
+                                             'Test::More' => '0'
+                                           },
+                       'ABSTRACT' => 'Display where template\'s start and stop',
+                       'EXE_FILES' => [],
+                       'VERSION' => '0.05',
+                       'PREREQ_PM' => {
+                                        'parent' => '0',
+                                        'Template::Context' => '0'
+                                      },
+                       'LICENSE' => 'perl'
+                     );
 
-    return $postamble;
-}
+
+delete $WriteMakefileArgs{BUILD_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.56) };
+
+delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
+  unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
+
+WriteMakefile(%WriteMakefileArgs);
+
+
+
