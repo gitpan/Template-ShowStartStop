@@ -4,7 +4,10 @@ MANIFEST
 META.yml
 Makefile.PL
 README
-dist.ini
 lib/Template/ShowStartStop.pm
 t/00-load.t
+t/000-report-versions.t
 t/eval.t
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/release-synopsis.t
