@@ -1,7 +1,7 @@
 #!perl
 use warnings;
 use strict;
-use Test::More 0.88;
+use Test::More 0.94;
 
 # Include a cut-down version of YAML::Tiny so we don't introduce unnecessary
 # dependencies ourselves.
@@ -406,11 +406,14 @@ BEGIN {
     my %skip = map { $_ => 1 } qw(
       App::FatPacker
       Class::Accessor::Classy
+      Devel::Cover
       Module::Install
       Moose::Role
-      Test::YAML::Meta
+      Template::Test
+      Test::Kwalitee
       Test::Pod::Coverage
       Test::Portability::Files
+      Test::YAML::Meta
     );
 
     my $Test = Test::Builder->new;

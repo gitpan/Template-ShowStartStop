@@ -1,9 +1,10 @@
-package Template::ShowStartStop;
-BEGIN {
-  $Template::ShowStartStop::VERSION = '0.07';
-}
 use strict;
 use warnings;
+
+package Template::ShowStartStop;
+BEGIN {
+  $Template::ShowStartStop::VERSION = '0.08';
+}
 use parent qw( Template::Context );
 
 my $sub = qw(process);
@@ -12,9 +13,9 @@ my $super = __PACKAGE__->can("SUPER::$sub") or die;
 
 my $wrapped = sub {
 	my $self = shift;
-	my $what = shift;
+	my $what = shift; # what template are we working with
 
-	my $template
+	my $template # get the template filename
 		# conditional           # set $template to
 		= ref($what) eq 'ARRAY' ? join( ' + ', @{$what} )
 		: ref($what)            ? $what->name
@@ -45,21 +46,15 @@ Template::ShowStartStop - Display where template's start and stop
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
 	use Template::ShowStartStop;
 
-	my %config = ( # Whatever your config is
-		INCLUDE_PATH	=> '/my/template/path',
-		COMPILE_EXT	 => '.ttc',
-		COMPILE_DIR	 => '/tmp/tt',
-	);
-
-	$config{ CONTEXT } = Template::ShowStartStop->new( %config );
-
-	my $template = Template->new( \%config );
+	my $tt = Template->new({
+		CONTEXT => Template::ShowStartStop->new
+	});
 
 =head1 DESCRIPTION
 
@@ -71,12 +66,17 @@ Using Template::ShowStartStop is simple.
 Now when you process templates, HTML comments will get embedded in your
 output, which you can easily grep for.  The nesting level is also shown.
 
-	<!-- START: process mainmenu/cssindex.tt -->
-	<!-- STOP:  process mainmenu/cssindex.tt -->
-
-	....
-
-	<!-- STOP:  process mainmenu/footer.tt -->
+	<!-- START: process wrapper.tt -->
+	<!DOCTYPE html>
+	<html>
+	<head>
+	<!-- START: process head.tt -->
+	...
+	<!-- STOP:  process head.tt -->
+	</head>
+	...
+	</html>
+	<!-- STOP:  process wrapper.tt -->
 
 =head1 BUGS
 
@@ -98,16 +98,11 @@ and to Gavin Estey for the original Template::Timer code that this is based on.
 
 =head1 COPYRIGHT AND LICENSE
 
+This software is Copyright (c) 2010 by Caleb Cushing.
 
-This software is copyright (c) 2010 by Caleb Cushing.
+This is free software, licensed under:
 
-This is free software; you can redistribute it and/or modify it under
-one of the following licenses
-
-a) the GNU General Public License as published by the Free
-   Software Foundation; either version 3, or (at your option) any
-   later version, or
-b) the "Artistic License 2.0"
+  The Artistic License 2.0
 
 =cut
 

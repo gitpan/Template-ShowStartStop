@@ -2,20 +2,14 @@ NAME
     Template::ShowStartStop - Display where template's start and stop
 
 VERSION
-    version 0.07
+    version 0.08
 
 SYNOPSIS
             use Template::ShowStartStop;
 
-            my %config = ( # Whatever your config is
-                    INCLUDE_PATH    => '/my/template/path',
-                    COMPILE_EXT      => '.ttc',
-                    COMPILE_DIR      => '/tmp/tt',
-            );
-
-            $config{ CONTEXT } = Template::ShowStartStop->new( %config );
-
-            my $template = Template->new( \%config );
+            my $tt = Template->new({
+                    CONTEXT => Template::ShowStartStop->new
+            });
 
 DESCRIPTION
     Template::ShowStartStop provides inline comments througout your code
@@ -26,12 +20,17 @@ DESCRIPTION
     HTML comments will get embedded in your output, which you can easily
     grep for. The nesting level is also shown.
 
-            <!-- START: process mainmenu/cssindex.tt -->
-            <!-- STOP:  process mainmenu/cssindex.tt -->
-
-            ....
-
-            <!-- STOP:  process mainmenu/footer.tt -->
+            <!-- START: process wrapper.tt -->
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <!-- START: process head.tt -->
+            ...
+            <!-- STOP:  process head.tt -->
+            </head>
+            ...
+            </html>
+            <!-- STOP:  process wrapper.tt -->
 
 BUGS
     Please report any bugs or feature requests on
@@ -46,12 +45,9 @@ AUTHOR
       Caleb Cushing <xenoterracide@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2010 by Caleb Cushing.
+    This software is Copyright (c) 2010 by Caleb Cushing.
 
-    This is free software; you can redistribute it and/or modify it under
-    one of the following licenses
+    This is free software, licensed under:
 
-    a) the GNU General Public License as published by the Free Software
-    Foundation; either version 3, or (at your option) any later version, or
-    b) the "Artistic License 2.0"
+      The Artistic License 2.0
 

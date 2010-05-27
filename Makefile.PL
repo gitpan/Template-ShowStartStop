@@ -16,7 +16,8 @@ my %WriteMakefileArgs = (
     'File::Find' => '0',
     'File::Temp' => '0',
     'Scalar::Util' => '0',
-    'Test::More' => '0.88',
+    'Template::Test' => '0',
+    'Test::More' => '0.94',
     'perl' => '5.004'
   },
   'CONFIGURE_REQUIRES' => {
@@ -24,13 +25,13 @@ my %WriteMakefileArgs = (
   },
   'DISTNAME' => 'Template-ShowStartStop',
   'EXE_FILES' => [],
-  'LICENSE' => 'gpl3artistic2',
+  'LICENSE' => 'artistic_2',
   'NAME' => 'Template::ShowStartStop',
   'PREREQ_PM' => {
     'Template::Context' => '0',
     'parent' => '0'
   },
-  'VERSION' => '0.07',
+  'VERSION' => '0.08',
   'test' => {
     'TESTS' => 't/*.t'
   }
