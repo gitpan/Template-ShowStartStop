@@ -1,43 +1,52 @@
+# 
+# This file is part of Template-ShowStartStop
+# 
+# This software is Copyright (c) 2010 by Caleb Cushing.
+# 
+# This is free software, licensed under:
+# 
+#   The Artistic License 2.0
+# 
 use strict;
 use warnings;
 
 package Template::ShowStartStop;
 BEGIN {
-  $Template::ShowStartStop::VERSION = '0.08';
+  $Template::ShowStartStop::VERSION = '0.09';
 }
 use parent qw( Template::Context );
 
-my $sub = qw(process);
-
-my $super = __PACKAGE__->can("SUPER::$sub") or die;
+my $super = __PACKAGE__->can('SUPER::process') or die;
 
 my $wrapped = sub {
 	my $self = shift;
 	my $what = shift; # what template are we working with
 
-	my $template # get the template filename
-		# conditional           # set $template to
-		= ref($what) eq 'ARRAY' ? join( ' + ', @{$what} )
-		: ref($what)            ? $what->name
-		:                         $what
+	my $template
+		# conditional                        # set $template to
+		= ref($what) eq 'Template::Document' ? $what->name
+		: ref($what) eq 'ARRAY'              ? join( ' + ', @{$what} )
+		: ref($what) eq 'SCALAR'             ? '(evaluated block)'
+		:                                      $what
 		;
 
 	my $processed_data = $super->($self, $what, @_);
 
 	my $output
-		= "<!-- START: $sub $template -->\n"
+		= "<!-- START: process $template -->\n"
 		. "$processed_data"
-		. "<!-- STOP:  $sub $template -->\n"
+		. "<!-- STOP:  process $template -->\n"
 		;
 
 	return $output;
 };
 
-{ no strict 'refs'; *{$sub} = $wrapped; }
+*{process} = $wrapped;
 
 1;
+# ABSTRACT: Display where template's start and stop
 
-
+__END__
 =pod
 
 =head1 NAME
@@ -46,7 +55,7 @@ Template::ShowStartStop - Display where template's start and stop
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 SYNOPSIS
 
@@ -106,22 +115,3 @@ This is free software, licensed under:
 
 =cut
 
-
-__END__
-# ABSTRACT: Display where template's start and stop
-
-# notes from an IRC conversation on how to improve this module
-[Tuesday 02 March 2010] [04:26:51 pm] <tm604>   xenoterracide: you can get rid
-of foreach, since you only wrap one method, also drop my $super = ...;, remove
-'no strict', change '*{$sub} = sub {' for 'my $wrappedSub = sub {', use 'my
-$processed_data = $self->SUPER::process(...)', and at the end put { no strict
-'refs'; *{'process'} = $wrappedSub; }.
-[Tuesday 02 March 2010] [04:32:10 pm] <xenoterracide>   tm604 would I still
-need the foreach if I was still wrapping include?
-[Tuesday 02 March 2010] [04:32:31 pm] <tm604>   xenoterracide: Not really,
-because it's needless complexity for something that's just subclassing one or
-two methods.
-[Tuesday 02 March 2010] [04:32:49 pm] <xenoterracide>   k
-[Tuesday 02 March 2010] [04:35:08 pm] <tm604>   xenoterracide: Just put the
-common code in a single sub, and have it call include or process as
-appropriate.
