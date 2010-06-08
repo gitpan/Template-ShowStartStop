@@ -12,36 +12,32 @@ use warnings;
 
 package Template::ShowStartStop;
 BEGIN {
-  $Template::ShowStartStop::VERSION = '0.09';
+  $Template::ShowStartStop::VERSION = '0.10';
 }
 use parent qw( Template::Context );
 
-my $super = __PACKAGE__->can('SUPER::process') or die;
-
-my $wrapped = sub {
+sub process {
 	my $self = shift;
-	my $what = shift; # what template are we working with
+	my $template = shift;
 
-	my $template
+	my $template_id
 		# conditional                        # set $template to
-		= ref($what) eq 'Template::Document' ? $what->name
-		: ref($what) eq 'ARRAY'              ? join( ' + ', @{$what} )
-		: ref($what) eq 'SCALAR'             ? '(evaluated block)'
-		:                                      $what
+		= ref($template) eq 'Template::Document' ? $template->name
+		: ref($template) eq 'ARRAY'              ? join( ' + ', @{$template} )
+		: ref($template) eq 'SCALAR'             ? '(evaluated block)'
+		:                                          $template
 		;
 
-	my $processed_data = $super->($self, $what, @_);
+	my $processed_data = $self->SUPER::process( $template, @_ );
 
 	my $output
-		= "<!-- START: process $template -->\n"
+		= "<!-- START: process $template_id -->\n"
 		. "$processed_data"
-		. "<!-- STOP:  process $template -->\n"
+		. "<!-- STOP:  process $template_id -->\n"
 		;
 
 	return $output;
 };
-
-*{process} = $wrapped;
 
 1;
 # ABSTRACT: Display where template's start and stop
@@ -55,7 +51,7 @@ Template::ShowStartStop - Display where template's start and stop
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -67,7 +63,7 @@ version 0.09
 
 =head1 DESCRIPTION
 
-Template::ShowStartStop provides inline comments througout your code where
+Template::ShowStartStop provides inline comments throughout your code where
 each template stops and starts.  It's an overridden version of L<Template::Context>
 that wraps the C<process()> method.
 
@@ -92,6 +88,12 @@ output, which you can easily grep for.  The nesting level is also shown.
 Please report any bugs or feature requests on 
 L<http://github.com/xenoterracide/Template-ShowStartStop/issues>
 as I'm not fond of RT.
+
+=head1 SUBMITTING PATCHES
+
+Please read the SubmittingPatches file included with this Distribution. Patches
+that are of sufficient quality, within the goals of the project and pass the
+checklist will probably be accepted.
 
 =head1 ACKNOWLEDGEMENTS
 
