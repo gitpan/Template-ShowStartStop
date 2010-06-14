@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.31;
 
 
 my %WriteMakefileArgs = (
-  'ABSTRACT' => 'Display where template\'s start and stop',
+  'ABSTRACT' => 'Display where templates start and stop',
   'AUTHOR' => 'Caleb Cushing <xenoterracide@gmail.com>',
   'BUILD_REQUIRES' => {
     'Carp' => '0',
@@ -30,10 +30,11 @@ my %WriteMakefileArgs = (
   'NAME' => 'Template::ShowStartStop',
   'PREREQ_PM' => {
     'Moose' => '0',
+    'Moose::Role' => '0',
     'Template::Context' => '0',
     'namespace::autoclean' => '0'
   },
-  'VERSION' => '0.11',
+  'VERSION' => '0.12',
   'test' => {
     'TESTS' => 't/*.t'
   }

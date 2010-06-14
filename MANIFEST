@@ -4,7 +4,8 @@ MANIFEST
 META.yml
 Makefile.PL
 README
-SubmittingPatches
+SubmittingPatches.pod
+lib/MooseX/Template/Context/Role/ShowStartStop.pm
 lib/Template/ShowStartStop.pm
 t/00-compile.t
 t/000-report-versions.t
@@ -16,6 +17,7 @@ t/insert.t
 t/process.t
 t/release-dist-manifest.t
 t/release-distmeta.t
+t/release-eol.t
 t/release-has-version.t
 t/release-kwalitee.t
 t/release-minimum-version.t
