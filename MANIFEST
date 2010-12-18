@@ -15,6 +15,7 @@ t/04-insert.t
 t/05-wrapper.t
 t/06-eval.t
 t/author-critic.t
+t/release-check-changes.t
 t/release-dist-manifest.t
 t/release-distmeta.t
 t/release-eol.t
@@ -23,7 +24,6 @@ t/release-kwalitee.t
 t/release-minimum-version.t
 t/release-pod-coverage.t
 t/release-pod-syntax.t
-t/release-synopsis.t
 t/release-unused-vars.t
 t/templates/how.tt
 t/templates/wrapper.tt
